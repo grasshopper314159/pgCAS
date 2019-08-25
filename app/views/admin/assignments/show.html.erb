@@ -1,0 +1,111 @@
+<div class="container">
+  <%= render 'shared/header' %>
+  </br>
+  </br>
+  <div class="row">
+    <div class="col-lg-12">
+      <h2 class= 'float-left'>Assignment Details</h2>
+      <%= link_to "Back", admin_assignments_path, class: "btn btn-info float-right" %>
+    </div>
+  </div>
+  </br>
+  <div class="row">
+    <% if @assignment.present? %>
+      <table class="table table-bordered table-striped table-hover">
+        <tr>
+          <th class='text-center'>Title</th>
+          <td class='text-center'><%= @assignment.title %></td>
+        </tr>
+        <tr>
+          <th class='text-center'>Description</th>
+          <td class='text-center'><%= @assignment.description.present? ? @assignment.description : "N/A" %></td>
+        </tr>
+        <tr>
+          <th class='text-center'>Due Date</th>
+          <td class='text-center'><%= @assignment.due_date.strftime('%a %d %b %Y by %l:%M %p') %></td>
+        </tr>
+        <tr>
+          <th class='text-center'>Command</th>
+          <td class='text-center'><%= @assignment.command %></td>
+        </tr>
+        <tr>
+          <th class='text-center'>Argument</th>
+          <td class='text-center'><%= @assignment.argument %></td>
+        </tr>
+        <tr>
+          <th class='text-center'>Grading Script</th>
+          <td class='text-center'>
+            <% if @assignment.grading_script_file&.attached? %>
+              <%= link_to @assignment.grading_script_file.blob.filename, rails_blob_path(@assignment.grading_script_file, disposition: "attachment") %>
+            <% else %>
+              Not Uploaded yet
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th class='text-center'>Download Grades</th>
+          <td class='text-center'>
+            <% if @assignment_users.present? %>
+              <%= link_to 'Download as Excel', download_as_excel_admin_assignment_path(@assignment, format: :xlsx) %>
+            <% else %>
+              No information available yet
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    <% else %>
+      <h4 class='text-center'>No details</h4>
+    <% end %>
+  </div>
+  </br>
+  </br>
+  <div class="row">
+    <div class="col-lg-12">
+      <h2 class= 'float-left'>All Uploaded Assignments of users</h2>
+    </div>
+  </div>
+  </br>
+  <div class="row">
+    <% if @assignment_users.present? %>
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th class='text-center'>Name</th>
+            <th class='text-center'>Email</th>
+            <th class='text-center'>Assignment File</th>
+            <th class='text-center'>Sumitted Date</th>
+            <th class='text-center'>Grade</th>
+            <th class='text-center'>Rubric</th>
+          </tr>
+        </thead>
+        <% @assignment_users.each do |assignment_user| %>
+          <tbody>
+            <tr>
+              <td class='text-center'><%= assignment_user.user.name.humanize %></td>
+              <td class='text-center'><%= assignment_user.user.email %></td>
+              <td class='text-center'>
+                <% if assignment_user.file&.attached? %>
+                  <%= link_to assignment_user.file.blob.filename, rails_blob_path(assignment_user.file, disposition: "attachment") %>
+                <% else %>
+                  Not Uploaded yet
+                <% end %>
+              </td>
+              <td class='text-center'><%= assignment_user.submit_date.localtime.strftime('%a %d %b %Y at %l:%M %p') %></td>
+              <td class='text-center'><%= assignment_user.grade %></td>
+              <td class='text-center'>
+                <% if assignment_user.rubric&.attached? %>
+                  <%= link_to assignment_user.rubric.blob.filename, rails_blob_path(assignment_user.rubric, disposition: "attachment") %>
+                <% else %>
+                  Not Available yet
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
+    <% else %>
+      <h4 class='text-center'>None of the users have uploaded any assignment yet.</h4>
+    <% end %>
+  </div>
+</div>
+</div>

@@ -1,0 +1,45 @@
+<%= form_for [:admin, @assignment], html: { class: 'form-horizontal', 'data-parsley-validate': '' } do |f| %>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.label 'Title' %>
+      <%= f.text_field :title, required: true, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.label 'Description' %>
+      <%= f.text_area :description, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.label 'Submit Date' %>
+      <%= f.datetime_field :due_date, required: true, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.label 'Command' %>
+      <%= f.text_field :command, required: true, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.label 'Argument' %>
+      <%= f.text_field :argument, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.label 'Grading Script' %>
+      <%= f.file_field :grading_script_file, required: true, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-xs-12">
+      <%= f.submit class: 'btn btn-primary float-left' %>
+      <%= link_to 'Cancel', admin_assignments_path, class: 'btn btn-success float-right' %>
+    </div>
+<% end %>

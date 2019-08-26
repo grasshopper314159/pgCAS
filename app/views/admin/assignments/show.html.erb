@@ -81,7 +81,10 @@
         <% @assignment_users.each do |assignment_user| %>
           <tbody>
             <tr>
+            <% if false %>
               <td class='text-center'><%= assignment_user.user.name.humanize %></td>
+            <% end %>
+              <td class='text-center'><%= assignment_user.user.email %></td>
               <td class='text-center'><%= assignment_user.user.email %></td>
               <td class='text-center'>
                 <% if assignment_user.file&.attached? %>

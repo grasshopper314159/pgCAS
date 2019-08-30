@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     dest_folder = "#{Rails.root}/temp/#{assignment.title}"
     FileUtils.mkdir_p(dest_folder) unless File.directory?(dest_folder)
     filename = ActiveStorage::Blob.service.path_for(assignment.assignment_users.first.file.blob.key)
-    FileUtils.cp(filename, "#{dest_folder}/#{current_user.name}_#{uploaded_io.original_filename}")
+    FileUtils.cp(filename, "#{dest_folder}/#{current_user.email}_#{uploaded_io.original_filename}")
   end
 
   def run_script(assignment_user)
@@ -56,28 +56,28 @@ class UsersController < ApplicationController
       @timeout = true
     end
 
-    destination = "#{Rails.root}/public/#{assignment.title}"
+    destination = "#{Rails.root}/student_submissions/#{assignment.title}"
     FileUtils.mkdir_p(destination) unless File.directory?(destination)
 
     if @timeout
       assignment_user.grade = -1.0
     else
       assignment_user.grade = stdout.to_f
-      dest_folder = "#{Rails.root}/temp/#{assignment.title}/#{current_user.name}_#{assignment.title}_rubric"
+      dest_folder = "#{Rails.root}/temp/#{assignment.title}/#{current_user.email}_#{assignment.title}_rubric"
       File.open(dest_folder, "w") { |file| file.puts "#{stderr}"}
       assignment_user.rubric.attach(
         io: File.open(dest_folder),
-        filename: "#{current_user.name}_#{assignment.title}_rubric.txt"
+        filename: "#{current_user.email}_#{assignment.title}_rubric.txt"
       )
       filename = ActiveStorage::Blob.service.path_for(assignment_user.rubric.blob.key)
-      FileUtils.cp(filename, "#{destination}/#{current_user.name}_#{assignment.title}_rubric.txt")
+      FileUtils.cp(filename, "#{destination}/#{current_user.email}_#{assignment.title}_rubric.txt")
     end
 
     assignment_user.save
     uploaded_file = params[:assignment_user][:file]
 
     filename = ActiveStorage::Blob.service.path_for(assignment.assignment_users.first.file.blob.key)
-    FileUtils.cp(filename, "#{destination}/#{current_user.name}_#{uploaded_file.original_filename}")
+    FileUtils.cp(filename, "#{destination}/#{current_user.email}_#{uploaded_file.original_filename}")
 
     return @timeout
   end

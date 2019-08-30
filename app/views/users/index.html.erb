@@ -37,7 +37,7 @@
           <tbody>
             <tr>
               <td class='text-center'><%= link_to assignment.title.humanize, assign_desc_users_path(assignment: assignment) %></td>
-              <td class='text-center'>Click title to see description</td>
+              <td class='text-center'><%= assignment.description.present? ? assignment.description.truncate(15) : "N/A" %></td>
               <td class='text-center'><%= assignment.due_date.strftime('%a %d %b %Y by %l:%M %p') %></td>
               <td class='text-center'>
                 <% if user_rubric(assignment)&.attached? %>

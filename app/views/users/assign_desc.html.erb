@@ -39,7 +39,7 @@
       	<th class='text-center'>Uploaded File</th>
         <td class='text-center'>
           <% if user_assignment(@assignment)&.attached? %>
-            <%= link_to user_assignment(assignment)&.blob.filename, rails_blob_path(@assignment.assignment_users.first.file, disposition: "attachment") %>
+            <%= link_to user_assignment(@assignment)&.blob.filename, rails_blob_path(@assignment.assignment_users.first.file, disposition: "attachment") %>
           <% else %>
             Not Uploaded yet
           <% end %>

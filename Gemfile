@@ -8,6 +8,7 @@ gem 'jquery-rails'
 gem 'toastr_rails'
 gem 'file_validators'
 gem 'rubysl-open3', '~> 2.0'
+gem 'devise_cas_authenticatable'
 gem 'axlsx', '~> 2.0'
 gem "axlsx_rails"
 gem 'activerecord-session_store'

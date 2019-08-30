@@ -1,0 +1,65 @@
+<div class="container">
+	<%= render 'shared/header' %>
+	<div class="row mt-5">
+		<h2>Assignment Details</h2>
+	</div>
+	<div class="row mt-5">
+		<table class="table table-bordered table-striped table-hover">
+      <tr>
+        <th class='text-center'>Title</th>
+        <td class='text-center'><%= @assignment.title.humanize %></td>
+      </tr>
+      <tr>
+        <th class='text-center'>Type</th>
+        <td class='text-center'><%= @assignment.assignment_type.humanize %></td>
+      </tr>
+      <tr>
+        <th class='text-center'>Description</th>
+        <td class='text-center'><%= @assignment.description.present? ? @assignment.description.html_safe : "N/A" %></td>
+      </tr>
+      <tr>
+        <th class='text-center'>Due Date</th>
+        <td class='text-center'><%= @assignment.due_date.strftime('%a %d %b %Y by %l:%M %p') %></td>
+      </tr>
+      <tr>
+      	<th class='text-center'>Rubric</th>
+      	<td class='text-center'>
+          <% if user_rubric(@assignment)&.attached? %>
+            <%= link_to user_rubric(@assignment)&.blob.filename, rails_blob_path(@assignment.assignment_users.first.rubric, disposition: "attachment") %>
+          <% else %>
+            Not Available yet
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+      	<th class='text-center'>Grade</th>
+        <td class='text-center'><%= user_grade(@assignment).present? ? user_grade(@assignment) : 'Not Available yet' %></td>
+      </tr>
+      <tr>
+      	<th class='text-center'>Uploaded File</th>
+        <td class='text-center'>
+          <% if user_assignment(@assignment)&.attached? %>
+            <%= link_to user_assignment(assignment)&.blob.filename, rails_blob_path(@assignment.assignment_users.first.file, disposition: "attachment") %>
+          <% else %>
+            Not Uploaded yet
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+      	<th class='text-center'>Upload Assignment</th>
+        <td class='text-center'>
+          <%= form_for :assignment_user, local: true, url: upload_file_users_path, method: :post, html: { class: 'form-horizontal', 'data-parsley-validate': '' } do |f| %>
+            <div class="input-group">
+            	<div class='offset-4'>
+	              <%= f.hidden_field :assignment_id, value: @assignment.id %>
+	              <%= f.file_field :file, required: true %>
+	              <span class="input-group-btn">
+	                <%= f.submit 'Upload', class: 'btn btn-primary btn-group' %>
+	              </span>
+            	<div>
+            </div>
+          <% end %>
+        </td>
+      </tr>
+	</div>
+</div>

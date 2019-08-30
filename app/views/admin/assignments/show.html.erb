@@ -17,8 +17,12 @@
           <td class='text-center'><%= @assignment.title %></td>
         </tr>
         <tr>
+          <th class='text-center'>Type</th>
+          <td class='text-center'><%= @assignment.assignment_type.humanize %></td>
+        </tr>
+        <tr>
           <th class='text-center'>Description</th>
-          <td class='text-center'><%= @assignment.description.present? ? @assignment.description : "N/A" %></td>
+          <td class='text-center'><%= @assignment.description.present? ? @assignment.description.html_safe : "N/A" %></td>
         </tr>
         <tr>
           <th class='text-center'>Due Date</th>

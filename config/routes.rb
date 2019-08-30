@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       post :upload_file
+      get :assign_desc
     end
   end
 

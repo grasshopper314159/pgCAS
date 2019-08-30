@@ -1,4 +1,4 @@
-<header class="header trans_300">
+<header class="header ">
   <div class="main_nav_container">
     <div class="container">
       <div class="row">
@@ -10,7 +10,7 @@
             <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
           <% else %>
             <%= link_to "Dashboard", root_path, class: 'btn btn-warning' %>
-            <%= link_to "Assignments", users_path, class: 'btn btn-success' %>
+            <%= link_to "Assignments", users_path(type: 'assignment'), class: 'btn btn-success' %>
             <%= link_to "Sign Out",destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
           <% end %>
         </div>

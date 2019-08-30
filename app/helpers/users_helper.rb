@@ -10,4 +10,12 @@ module UsersHelper
   def user_grade(assignment)
     assignment.assignment_users.find_by(user_id: current_user.id)&.grade
   end
+
+  def active_class?(path)
+    if request.fullpath == path
+      return 'nav-link active'
+    else
+      return 'nav-link'
+    end
+  end
 end

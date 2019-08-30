@@ -1,14 +1,25 @@
 <div class="container">
   <%= render 'shared/header' %>
-  </br>
-  </br>
-  <div class="row">
+
+  <div class="row mt-5">
     <div class="col-lg-12">
       <h2 class= 'float-left'><%= current_user.name.humanize %> Assignments!</h2>
     </div>
   </div>
-  </br>
   <div class="row">
+    <div class="offset-5 mt-5">
+      <ul class="nav nav-pills" role="tablist">
+        <li class="nav-item">
+          <%= link_to 'Assignments', users_path(type: 'assignment'), class: active_class?('/users?type=assignment') %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Labs', users_path(type: 'lab'), class: active_class?('/users?type=lab')  %>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row mt-5">
     <% if @assignments.present? %>
       <table class="table table-bordered table-striped table-hover">
         <thead>
@@ -25,8 +36,8 @@
         <% @assignments.each do |assignment| %>
           <tbody>
             <tr>
-              <td class='text-center'><%= assignment.title %></td>
-              <td class='text-center'><%= assignment.description.present? ? assignment.description.truncate(20) : "N/A" %></td>
+              <td class='text-center'><%= link_to assignment.title.humanize, assign_desc_users_path(assignment: assignment) %></td>
+              <td class='text-center'>Click title to see description</td>
               <td class='text-center'><%= assignment.due_date.strftime('%a %d %b %Y by %l:%M %p') %></td>
               <td class='text-center'>
                 <% if user_rubric(assignment)&.attached? %>

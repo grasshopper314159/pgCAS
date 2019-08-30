@@ -16,7 +16,7 @@
         <thead>
           <tr>
             <th class='text-center'>Title</th>
-            <th class='text-center'>Description</th>
+            <th class='text-center'>Type</th>
             <th class='text-center'>Due Date</th>
             <th class='text-center'>Upload Assignment</th>
             <th class='text-center'>Actions</th>    
@@ -26,7 +26,7 @@
           <tbody>
             <tr>
               <td class='text-center'><%= assignment.title %></td>
-              <td class='text-center'><%= assignment.description.present? ? assignment.description.truncate(20) : "N/A" %></td>
+              <td class='text-center'><%= assignment.assignment_type.humanize %></td>
               <td class='text-center'><%= assignment.due_date.strftime('%a %d %b %Y by %l:%M %p') %></td>
               <td class='text-center'>
                 <% if assignment.sent_to_users == true %>

@@ -8,7 +8,7 @@
   <div class="form-group">
     <div class="col-sm-12">
       <%= f.label 'Description' %>
-      <%= f.text_area :description, class: 'form-control' %>
+      <%= f.text_area :description, rows: 16, id: 'froala-editor', class: 'form-control editor' %>
     </div>
   </div>
   <div class="form-group">
@@ -38,8 +38,26 @@
   </div>
 
   <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.label 'Assignment Type' %><br/>
+      <%= f.collection_radio_buttons :assignment_type, Assignment.assignment_types.map {|k,v| [k,k]}, :first, :last do |b| %>
+        <div class='form-check'>
+          <%= b.radio_button %>
+          <%= b.label %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group">
     <div class="col-xs-12">
       <%= f.submit class: 'btn btn-primary float-left' %>
       <%= link_to 'Cancel', admin_assignments_path, class: 'btn btn-success float-right' %>
     </div>
 <% end %>
+
+<script>
+  var editor = new FroalaEditor('textarea#froala-editor')
+  editor.opts.height = 300;
+  editor.size.refresh();
+</script>

@@ -1,7 +1,11 @@
 
 class UsersController < ApplicationController
   def index
-    @assignments = Assignment.where(sent_to_users: true)
+    if params[:type] == 'lab'
+      @assignments = Assignment.lab.where(sent_to_users: true)
+    else
+      @assignments = Assignment.assignment.where(sent_to_users: true)
+    end
   end
 
   def upload_file
@@ -76,6 +80,10 @@ class UsersController < ApplicationController
     FileUtils.cp(filename, "#{destination}/#{current_user.name}_#{uploaded_file.original_filename}")
 
     return @timeout
+  end
+
+  def assign_desc
+    @assignment = Assignment.find(params[:assignment])
   end
 
   private

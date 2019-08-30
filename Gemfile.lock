@@ -100,6 +100,9 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
+    devise_cas_authenticatable (1.10.4)
+      devise (>= 1.2.0)
+      rubycas-client (>= 2.2.1)
     erubi (1.8.0)
     execjs (2.7.0)
     ffi (1.11.1)
@@ -183,6 +186,8 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     ruby_dep (1.5.0)
+    rubycas-client (2.3.9)
+      activesupport
     rubysl-open3 (2.0.0)
     rubyzip (1.0.0)
     sass (3.7.4)
@@ -259,6 +264,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   devise
+  devise_cas_authenticatable
   file_validators
   jbuilder (~> 2.5)
   jquery-rails

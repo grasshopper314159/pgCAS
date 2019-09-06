@@ -10,7 +10,7 @@ Devise.setup do |config|
   config.cas_login_url = "https://login.umt.edu/idp/profile/cas/login"
   config.cas_logout_url = "https://login.umt.edu/idp/profile/cas/logout"
   config.cas_validate_url = "https://login.umt.edu/idp/profile/cas/serviceValidate"
-  config.cas_username_column = 'email'
+  config.cas_username_column = 'uid'
   
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
@@ -49,24 +49,25 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  # config.authentication_keys = [:email]
+  config.authentication_keys = [:uid]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
   # find_for_authentication method and considered in your model lookup. For instance,
   # if you set :request_keys to [:subdomain], :subdomain will be used on authentication.
   # The same considerations mentioned for authentication_keys also apply to request_keys.
-  # config.request_keys = []
+  config.request_keys = [:uid]
+  #changed
 
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
-  config.case_insensitive_keys = [:email]
+  #config.case_insensitive_keys = [:uid]
 
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
-  config.strip_whitespace_keys = [:email]
+  #config.strip_whitespace_keys = [:uid]
 
   # Tell if authentication through request.params is enabled. True by default.
   # It can be set to an array that will enable params authentication only for the
@@ -120,7 +121,7 @@ Devise.setup do |config|
   # a value less than 10 in other environments. Note that, for bcrypt (the default
   # algorithm), the cost increases exponentially with the number of stretches (e.g.
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
-  config.stretches = Rails.env.test? ? 1 : 11
+  config.stretches = Rails.env.test? ? 1 : 5
 
   # Set up a pepper to generate the hashed password.
   # config.pepper = '82ff0492d567ed60bf9e1731b7ace7ad07f1825d054f250b40a8c95ce5c45c506332f12436893cb4d02efcab750b7046d47b4083ac25c60314ab1a7b5ddb849b'
@@ -157,7 +158,7 @@ Devise.setup do |config|
   config.reconfirmable = true
 
   # Defines which key will be used when confirming an account
-  # config.confirmation_keys = [:email]
+  config.confirmation_keys = [:uid]
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.

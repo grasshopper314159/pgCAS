@@ -10,7 +10,7 @@
     <div class="offset-5 mt-5">
       <ul class="nav nav-pills" role="tablist">
         <li class="nav-item">
-          <%= link_to 'Assignments', users_path(type: 'assignment'), class: active_class?('/users?type=assignment') %>
+          <%= link_to 'Homework', users_path(type: 'assignment'), class: active_class?('/users?type=assignment') %>
         </li>
         <li class="nav-item">
           <%= link_to 'Labs', users_path(type: 'lab'), class: active_class?('/users?type=lab')  %>
@@ -41,7 +41,7 @@
               <td class='text-center'><%= assignment.due_date.strftime('%a %d %b %Y by %l:%M %p') %></td>
               <td class='text-center'>
                 <% if user_rubric(assignment)&.attached? %>
-                  <%= link_to user_rubric(assignment)&.blob.filename, rails_blob_path(assignment.assignment_users.first.rubric, disposition: "attachment") %>
+                  <%= link_to user_rubric(assignment)&.blob.filename, rails_blob_path(user_rubric(assignment), disposition: "attachment") %>
                 <% else %>
                   Not Available yet
                 <% end %>
@@ -49,7 +49,7 @@
               <td class='text-center'><%= user_grade(assignment).present? ? user_grade(assignment) : 'Not Available yet' %></td>
               <td class='text-center'>
                 <% if user_assignment(assignment)&.attached? %>
-                  <%= link_to user_assignment(assignment)&.blob.filename, rails_blob_path(assignment.assignment_users.first.file, disposition: "attachment") %>
+                  <%= link_to user_assignment(assignment)&.blob.filename, rails_blob_path(user_assignment(assignment), disposition: "attachment") %>
                 <% else %>
                   Not Uploaded yet
                 <% end %>

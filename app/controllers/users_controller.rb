@@ -2,8 +2,10 @@
 class UsersController < ApplicationController
   def index
     if params[:type] == 'lab'
+    $lab = 1
       @assignments = Assignment.lab.where(sent_to_users: true)
     else
+      $lab = 0
       @assignments = Assignment.assignment.where(sent_to_users: true)
     end
   end
@@ -27,7 +29,11 @@ class UsersController < ApplicationController
     else
       flash[:alert] = 'Assignment not created successfully'
     end   
-    redirect_to users_path  
+    if $lab == 1
+      redirect_to users_path(type: 'lab') 
+    else
+      redirect_to users_path 
+    end  
   end
 
   def save_file_separate_folder
@@ -46,7 +52,7 @@ class UsersController < ApplicationController
     student_assignment = ActiveStorage::Blob.service.path_for(assignment_user.file.blob.key)
     grading_script     = ActiveStorage::Blob.service.path_for(assignment.grading_script_file.blob.key)
     FileUtils.cd("#{Rails.root}/temp/#{assignment.title}")
-    cmd = "#{command} #{grading_script} #{argument} #{student_assignment}"
+    cmd = "#{command} #{grading_script} #{student_assignment}"
     begin
       stdout, stderr, status = Timeout::timeout(5) do
          Open3.capture3(cmd)

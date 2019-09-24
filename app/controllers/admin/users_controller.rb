@@ -3,6 +3,8 @@ class Admin::UsersController < Admin::BaseController
   def index
     # Uses enum functionality to filter out admins
     @users = User.user
+		@users = @users.sort_by{|x| x[:name]}
+		
   end
 
   def destroy

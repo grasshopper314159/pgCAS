@@ -4,6 +4,7 @@ class Admin::AssignmentsController < Admin::BaseController
   def index
     
     @assignments = Assignment.all
+		@assignments = @assignments.sort_by{|x| x[:title]}
   end
 
   def new
@@ -44,6 +45,7 @@ class Admin::AssignmentsController < Admin::BaseController
 
   def show
     @assignment_users = @assignment.assignment_users
+		@assignment_users = @assignment_users.sort_by{|x| x[:title]}
   end
 
   def sent_to_users
@@ -53,6 +55,7 @@ class Admin::AssignmentsController < Admin::BaseController
 
   def download_as_excel
     @assignment_users = @assignment.assignment_users
+		@assignment_users = @assignment_users.sort_by{|x| x[:title]}
 
     respond_to do |format| 
        format.xlsx {render xlsx: 'download_as_excel',filename: "#{@assignment.title}_grades.xlsx"}

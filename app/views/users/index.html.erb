@@ -38,7 +38,7 @@
             <tr>
               <td class='text-center'><%= link_to assignment.title.humanize, assign_desc_users_path(assignment: assignment) %></td>
               <td class='text-center'><%= assignment.description.present? ? assignment.description[3..25] : "N/A" %></td>
-              <td class='text-center'><%= assignment.due_date.strftime('%a %d %b %Y by %l:%M %p') %></td>
+              <td class='text-center'><%= assignment.due_date.strftime('%a, %-m/%d %l:%M %p') %></td>
               <td class='text-center'>
                 <% if user_rubric(assignment)&.attached? %>
                   <%= link_to user_rubric(assignment)&.blob.filename, rails_blob_path(user_rubric(assignment), disposition: "attachment") %>

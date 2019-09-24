@@ -4,9 +4,11 @@ class UsersController < ApplicationController
     if params[:type] == 'lab'
     $lab = 1
       @assignments = Assignment.lab.where(sent_to_users: true)
+			@assignments = @assignments.sort_by{|x| x[:title]}
     else
       $lab = 0
       @assignments = Assignment.assignment.where(sent_to_users: true)
+			@assignments = @assignments.sort_by{|x| x[:title]}
     end
   end
 
@@ -20,7 +22,7 @@ class UsersController < ApplicationController
       save_file_separate_folder
       run_script(@assignment_user)
       if @timeout
-        flash[:alert] = 'Terminated due to timeout (check for infinite loop).'
+        flash[:alert] = 'Your assignment took too long and was terminated.  Check for an infinite loop and resubmit.'
       else
         flash[:notice] = 'File created successfully'
       end
@@ -47,14 +49,15 @@ class UsersController < ApplicationController
 
   def run_script(assignment_user)
     assignment         = Assignment.find_by(id: params[:assignment_user][:assignment_id])
+		uploaded_io = params[:assignment_user][:file]
     argument           = assignment.argument.present? ? assignment.argument : " "
     command            = assignment.command
     student_assignment = ActiveStorage::Blob.service.path_for(assignment_user.file.blob.key)
     grading_script     = ActiveStorage::Blob.service.path_for(assignment.grading_script_file.blob.key)
     FileUtils.cd("#{Rails.root}/temp/#{assignment.title}")
-    cmd = "#{command} #{grading_script} #{student_assignment}"
+    cmd = "#{command} #{grading_script} #{student_assignment} \'#{uploaded_io.original_filename}\'"
     begin
-      stdout, stderr, status = Timeout::timeout(5) do
+      stdout, stderr, status = Timeout::timeout(15) do
          Open3.capture3(cmd)
       end
       @timeout = false

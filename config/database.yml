@@ -39,5 +39,12 @@ test:
 
 
 production:
-  <<: *default
-  database: db/production.postgresql
+  #<<: *default
+  #database: db/production.postgresql
+  adapter: postgresql
+  encoding: unicode
+  database: rails_api
+  host: localhost
+  pool: 5
+  username: pg2
+  password: pg2

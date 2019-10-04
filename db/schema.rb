@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2019_09_06_212428) do
   create_table "assignment_users", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "assignment_id"
-    t.datetime "submit_date", default: -> { "now()" }
+    t.datetime "submit_date", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "grade"
